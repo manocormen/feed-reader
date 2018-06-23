@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ManoelCortesMendez/feed-reader/issues"
   },
-  "homepage": "https://github.com/ManoelCortesMendez/feed-reader#readme"
+  "homepage": "https://github.com/ManoelCortesMendez/feed-reader#readme",
+  "devDependencies": {
+    "gulp": "^4.0.0"
+  }
 }
