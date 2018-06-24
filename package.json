@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/ManoelCortesMendez/feed-reader#readme",
   "devDependencies": {
+    "browser-sync": "^2.24.4",
     "gulp": "^4.0.0",
     "gulp-autoprefixer": "^5.0.0",
     "gulp-sass": "^4.0.1"
