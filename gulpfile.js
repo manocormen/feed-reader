@@ -12,8 +12,9 @@ const paths = {
 };
 
 // Export tasks
-gulp.task('default', defaultTask)
-gulp.task('compileStyles', compileStyles)
+gulp.task('default', defaultTask);
+gulp.task('compileStyles', compileStyles);
+gulp.task('watchChanges', watchChanges);
 
 // Declare Tasks
 
@@ -32,4 +33,9 @@ function compileStyles (done) {
       })) // Autoprefixe them with browser vendor prefixes
       .pipe(gulp.dest(paths.styles.dest)); // Save them in css directory
   done(); // Signal completion of the execution of the function
+}
+
+/* Watch for changes and trigger appropriate task in response */
+function watchChanges (done) {
+  gulp.watch(paths.styles.src, compileStyles); // Recompile styles on changes
 }
