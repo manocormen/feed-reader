@@ -7,6 +7,7 @@ const autoprefixer = require('gulp-autoprefixer'); // To add vendor prefixes to 
 const browserSync = require('browser-sync').create(); // To edit live
 const eslint = require('gulp-eslint'); // To lint JavaScript
 const concat = require('gulp-concat'); // To concat JS
+const uglify = require('gulp-uglify'); // To minify JS
 
 // Initialize variables
 const paths = {
@@ -77,7 +78,7 @@ function copyHtml (done) {
   done();
 }
 
-/* Copy JavaScript to dist */
+/* Copy concatenated JavaScript to dist */
 function scripts (done) {
   gulp.src(paths.scripts.src)
     .pipe(concat('all.js')) // Concat all JS files into one all.js
@@ -85,10 +86,11 @@ function scripts (done) {
   done();
 }
 
-/* Copy JavaScript to dist */
+/* Copy concatenated and minified JavaScript to dist */
 function scriptsDist (done) {
   gulp.src(paths.scripts.src)
     .pipe(concat('all.js')) // Concat all JS files into one all.js
+    .pipe(uglify()) // Minify JS (time-intensive, so only for dist)
     .pipe(gulp.dest(paths.scripts.dest));
   done();
 }
