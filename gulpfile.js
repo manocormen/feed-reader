@@ -32,6 +32,8 @@ gulp.task('lint', lint);
 gulp.task('copy-html', copyHtml);
 gulp.task('scripts', scripts);
 gulp.task('scripts-dist', scriptsDist);
+// Build production-ready version of website
+gulp.task('dist', gulp.series(copyHtml, compile, scriptsDist));
 
 // Declare Tasks
 
