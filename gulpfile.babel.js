@@ -1,13 +1,15 @@
 /* eslint-env node */ // Tell eslint that this is a node file (so it accepts require())
 
 // Import modules
-const gulp = require('gulp'); // To export tasks
+import gulp from 'gulp';
 const sass = require('gulp-sass'); // To compile sass into css
 const autoprefixer = require('gulp-autoprefixer'); // To add vendor prefixes to css
 const browserSync = require('browser-sync').create(); // To edit live
 const eslint = require('gulp-eslint'); // To lint JavaScript
 const concat = require('gulp-concat'); // To concat JS
 const uglify = require('gulp-uglify'); // To minify JS
+const babel = require('gulp-babel'); // To transpile ES6 to ES5
+import rename from 'gulp-rename';
 
 // Initialize variables
 const paths = {
@@ -83,6 +85,7 @@ function copyHtml (done) {
 /* Copy concatenated JavaScript to dist */
 function scripts (done) {
   gulp.src(paths.scripts.src)
+    .pipe(babel())
     .pipe(concat('all.js')) // Concat all JS files into one all.js
     .pipe(gulp.dest(paths.scripts.dest));
   done();
@@ -91,8 +94,20 @@ function scripts (done) {
 /* Copy concatenated and minified JavaScript to dist */
 function scriptsDist (done) {
   gulp.src(paths.scripts.src)
+    .pipe(babel())
     .pipe(concat('all.js')) // Concat all JS files into one all.js
     .pipe(uglify()) // Minify JS (time-intensive, so only for dist)
     .pipe(gulp.dest(paths.scripts.dest));
+  done();
+}
+
+// Test function to check if babel works (by transpiling gulpfile)
+// Remove later
+gulp.task('transpileTest', test);
+function test (done) {
+  gulp.src('gulpfile.babel.js')
+    .pipe(babel())
+    .pipe(rename('gulpfile.js'))
+    .pipe(gulp.dest('transpileTest/'));
   done();
 }
