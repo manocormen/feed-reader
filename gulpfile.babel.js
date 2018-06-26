@@ -9,7 +9,8 @@ const eslint = require('gulp-eslint'); // To lint JavaScript
 const concat = require('gulp-concat'); // To concat JS
 const uglify = require('gulp-uglify'); // To minify JS
 const babel = require('gulp-babel'); // To transpile ES6 to ES5
-import rename from 'gulp-rename';
+import rename from 'gulp-rename'; // Te rename files
+import sourcemaps from 'gulp-sourcemaps'; // To sourcemap JS files
 
 // Initialize variables
 const paths = {
@@ -94,9 +95,11 @@ function scripts (done) {
 /* Copy concatenated and minified JavaScript to dist */
 function scriptsDist (done) {
   gulp.src(paths.scripts.src)
+    .pipe(sourcemaps.init())
     .pipe(babel())
     .pipe(concat('all.js')) // Concat all JS files into one all.js
     .pipe(uglify()) // Minify JS (time-intensive, so only for dist)
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(paths.scripts.dest));
   done();
 }
