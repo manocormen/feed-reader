@@ -41,7 +41,7 @@ gulp.task('copy-fonts', copyFonts);
 gulp.task('scripts', scripts);
 gulp.task('scripts-dist', scriptsDist);
 // Build production-ready version of website
-gulp.task('dist', gulp.series(copyHtml, compile, scriptsDist));
+gulp.task('dist', gulp.series(copyHtml, copyFonts, compile, scriptsDist));
 
 // Declare Tasks
 
