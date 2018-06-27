@@ -25,6 +25,10 @@ const paths = {
   html: {
     src: './index.html',
     dest: 'dist/'
+  },
+  fonts: {
+    src: './fonts/*',
+    dest: 'dist/fonts/'
   }
 };
 
@@ -33,6 +37,7 @@ gulp.task('default', gulp.series(copyHtml, compile, serve));
 gulp.task('compile', compile);
 gulp.task('lint', lint);
 gulp.task('copy-html', copyHtml);
+gulp.task('copy-fonts', copyFonts);
 gulp.task('scripts', scripts);
 gulp.task('scripts-dist', scriptsDist);
 // Build production-ready version of website
@@ -80,6 +85,13 @@ function lint (done) {
 function copyHtml (done) {
   gulp.src(paths.html.src)
     .pipe(gulp.dest(paths.html.dest));
+  done();
+}
+
+/* Copy fonts to dist directory */
+function copyFonts (done) {
+  gulp.src(paths.fonts.src)
+    .pipe(gulp.dest(paths.fonts.dest));
   done();
 }
 
