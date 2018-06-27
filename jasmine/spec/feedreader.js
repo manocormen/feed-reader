@@ -96,9 +96,8 @@ $(function() {
      * Remember, loadFeed() is asynchronous so this test will require
      * the use of Jasmine's beforeEach and asynchronous done() function.
      */
-    it('has at least one entry', function (done) {
+    it('has at least one entry', function () {
       expect(feed.querySelectorAll('.feed .entry').length).toBeGreaterThan(0);
-      done();
     });
   });
 
@@ -109,24 +108,28 @@ $(function() {
     let feedAfter;
 
     beforeEach(function (done) {
-      feedBefore = feed.innerHTML;
-      loadFeed(1, done);
+      // Load 1st feed and, in the loadFeed callback, save the feed content
+      loadFeed(0, function () {
+        feedBefore = feed.innerHTML;
+        // Load 2nd feed again and, in the loadFeed callback, save the feed content
+        loadFeed(1, function () {
+          feedAfter = feed.innerHTML;
+          done(); // Signal completion of nested async functions
+        });
+      });
     });
 
     /* Test that ensures when a new feed is loaded
      * by the loadFeed function that the content actually changes.
      * Remember, loadFeed() is asynchronous.
      */
-    it('should change content when feed changes', function (done) {
-      feedAfter = feed.innerHTML;
-
+    it('should change content when feed changes', function () {
       // Uncomment lines below to see before and after in console
       // console.log(feedBefore);
       // console.log('----------------------------------------');
       // console.log(feedAfter);
 
       expect(feedAfter).not.toBe(feedBefore);
-      done();
     });
   });
 }());
